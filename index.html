@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BABOK v3 Master Study Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        iiba: {
+                            blue: '#004b87',
+                            light: '#e6f0fa',
+                            accent: '#f2a900'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- Header Navigation -->
+    <nav class="bg-iiba-blue text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-book-open text-2xl text-iiba-accent"></i>
+                <h1 class="text-xl font-bold tracking-tight">BABOK® v3 Accelerator</h1>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#baccm" class="hover:text-iiba-accent transition">BACCM™</a>
+                <a href="#knowledge-areas" class="hover:text-iiba-accent transition">Knowledge Areas</a>
+                <a href="#exam-prep" class="bg-iiba-accent text-iiba-blue px-4 py-2 rounded-full hover:bg-white transition">Exam Simulator</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-br from-iiba-blue to-blue-900 text-white py-16 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-4">Master the Business Analysis Body of Knowledge</h2>
+            <p class="text-xl text-blue-100 max-w-2xl mb-8">Designed for IIBA® Certification Candidates (ECBA™, CCBA®, CBAP®). This interactive guide uses cognitive chunking and active recall to accelerate your exam readiness.</p>
+            <div class="flex flex-wrap gap-4">
+                <div class="bg-white/20 px-4 py-2 rounded-lg flex items-center backdrop-blur-sm">
+                    <i class="fas fa-layer-group text-iiba-accent mr-2"></i> 6 Knowledge Areas
+                </div>
+                <div class="bg-white/20 px-4 py-2 rounded-lg flex items-center backdrop-blur-sm">
+                    <i class="fas fa-tools text-iiba-accent mr-2"></i> 50 Techniques
+                </div>
+                <div class="bg-white/20 px-4 py-2 rounded-lg flex items-center backdrop-blur-sm">
+                    <i class="fas fa-eye text-iiba-accent mr-2"></i> 5 Perspectives
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+        <!-- BACCM Section (Core Concepts) -->
+        <section id="baccm" class="scroll-mt-24">
+            <div class="mb-8 border-b-2 border-slate-200 pb-4">
+                <h3 class="text-3xl font-bold text-slate-800 flex items-center">
+                    <i class="fas fa-cube text-iiba-blue mr-3"></i> The BACCM™ (Core Concept Model)
+                </h3>
+                <p class="text-slate-600 mt-2 text-lg">The conceptual framework for business analysis. Every task is evaluated through these 6 lenses.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Change -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-blue-100 text-iiba-blue rounded-lg flex items-center justify-center text-xl mb-4"><i class="fas fa-exchange-alt"></i></div>
+                    <h4 class="text-xl font-bold mb-2">Change</h4>
+                    <p class="text-sm text-slate-600 mb-3">The act of transformation in response to a need.</p>
+                    <div class="bg-slate-50 p-3 rounded text-sm border-l-4 border-iiba-blue">
+                        <strong>Example:</strong> Migrating from manual spreadsheets to a cloud CRM.
+                    </div>
+                </div>
+                <!-- Need -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-xl mb-4"><i class="fas fa-exclamation-circle"></i></div>
+                    <h4 class="text-xl font-bold mb-2">Need</h4>
+                    <p class="text-sm text-slate-600 mb-3">A problem or opportunity to be addressed.</p>
+                    <div class="bg-slate-50 p-3 rounded text-sm border-l-4 border-red-500">
+                        <strong>Example:</strong> Customer wait times are exceeding 15 minutes, causing churn.
+                    </div>
+                </div>
+                <!-- Solution -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center text-xl mb-4"><i class="fas fa-lightbulb"></i></div>
+                    <h4 class="text-xl font-bold mb-2">Solution</h4>
+                    <p class="text-sm text-slate-600 mb-3">A specific way of satisfying one or more needs in a context.</p>
+                    <div class="bg-slate-50 p-3 rounded text-sm border-l-4 border-green-500">
+                        <strong>Example:</strong> A self-service mobile app for customers.
+                    </div>
+                </div>
+                <!-- Stakeholder -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center text-xl mb-4"><i class="fas fa-users"></i></div>
+                    <h4 class="text-xl font-bold mb-2">Stakeholder</h4>
+                    <p class="text-sm text-slate-600 mb-3">A group or individual with a relationship to the change, need, or solution.</p>
+                    <div class="bg-slate-50 p-3 rounded text-sm border-l-4 border-purple-500">
+                        <strong>Example:</strong> End-users, Project Sponsor, IT Developers.
+                    </div>
+                </div>
+                <!-- Value -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-lg flex items-center justify-center text-xl mb-4"><i class="fas fa-gem"></i></div>
+                    <h4 class="text-xl font-bold mb-2">Value</h4>
+                    <p class="text-sm text-slate-600 mb-3">The worth, importance, or usefulness of something to a stakeholder.</p>
+                    <div class="bg-slate-50 p-3 rounded text-sm border-l-4 border-yellow-500">
+                        <strong>Example:</strong> 20% increase in operational efficiency (Tangible) or improved brand reputation (Intangible).
+                    </div>
+                </div>
+                <!-- Context -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-teal-100 text-teal-600 rounded-lg flex items-center justify-center text-xl mb-4"><i class="fas fa-globe"></i></div>
+                    <h4 class="text-xl font-bold mb-2">Context</h4>
+                    <p class="text-sm text-slate-600 mb-3">The circumstances that influence, are influenced by, and provide understanding of the change.</p>
+                    <div class="bg-slate-50 p-3 rounded text-sm border-l-4 border-teal-500">
+                        <strong>Example:</strong> New government privacy regulations (GDPR) impacting the industry.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Knowledge Areas (Interactive Tabs) -->
+        <section id="knowledge-areas" class="scroll-mt-24 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="p-6 bg-slate-50 border-b border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center">
+                <div>
+                    <h3 class="text-3xl font-bold text-slate-800 flex items-center">
+                        <i class="fas fa-project-diagram text-iiba-blue mr-3"></i> The 6 Knowledge Areas
+                    </h3>
+                    <p class="text-slate-600 mt-1">Select a knowledge area to view its core focus, tasks, and real-world application.</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row">
+                <!-- Tab Headers -->
+                <div class="w-full md:w-1/3 border-r border-slate-200 flex flex-col">
+                    <button onclick="openTab('ka1')" id="tab-ka1" class="ka-tab text-left px-6 py-4 border-l-4 border-iiba-blue bg-iiba-light font-semibold text-iiba-blue hover:bg-iiba-light transition">1. Planning & Monitoring</button>
+                    <button onclick="openTab('ka2')" id="tab-ka2" class="ka-tab text-left px-6 py-4 border-l-4 border-transparent text-slate-600 hover:bg-slate-50 hover:text-iiba-blue transition">2. Elicitation & Collaboration</button>
+                    <button onclick="openTab('ka3')" id="tab-ka3" class="ka-tab text-left px-6 py-4 border-l-4 border-transparent text-slate-600 hover:bg-slate-50 hover:text-iiba-blue transition">3. Requirements Life Cycle Mgt.</button>
+                    <button onclick="openTab('ka4')" id="tab-ka4" class="ka-tab text-left px-6 py-4 border-l-4 border-transparent text-slate-600 hover:bg-slate-50 hover:text-iiba-blue transition">4. Strategy Analysis</button>
+                    <button onclick="openTab('ka5')" id="tab-ka5" class="ka-tab text-left px-6 py-4 border-l-4 border-transparent text-slate-600 hover:bg-slate-50 hover:text-iiba-blue transition">5. Req. Analysis & Design Def.</button>
+                    <button onclick="openTab('ka6')" id="tab-ka6" class="ka-tab text-left px-6 py-4 border-l-4 border-transparent text-slate-600 hover:bg-slate-50 hover:text-iiba-blue transition">6. Solution Evaluation</button>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="w-full md:w-2/3 p-6 md:p-8 min-h-[400px]">
+                    <!-- KA 1 -->
+                    <div id="ka1" class="ka-content fade-in">
+                        <div class="flex items-center mb-4">
+                            <span class="bg-iiba-blue text-white px-3 py-1 rounded-full text-sm font-bold mr-3">KA 1</span>
+                            <h4 class="text-2xl font-bold">Business Analysis Planning & Monitoring</h4>
+                        </div>
+                        <p class="text-slate-700 mb-6">Organizes and coordinates the efforts of business analysts and stakeholders. It defines the "blueprint" for how BA work will be conducted.</p>
+                        
+                        <h5 class="font-bold text-slate-800 mb-2 border-b pb-1">Core Tasks</h5>
+                        <ul class="list-disc pl-5 mb-6 text-slate-600 space-y-1">
+                            <li>Plan Business Analysis Approach (Predictive vs. Adaptive)</li>
+                            <li>Plan Stakeholder Engagement</li>
+                            <li>Plan Business Analysis Governance</li>
+                            <li>Plan Business Analysis Information Management</li>
+                            <li>Identify Business Analysis Performance Improvements</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                            <h5 class="font-bold text-blue-800 mb-1"><i class="fas fa-briefcase mr-2"></i>Real-World Application</h5>
+                            <p class="text-sm text-blue-900">Before gathering requirements for a new HR portal, you decide to use an Agile (adaptive) approach, set up a Jira board for tracking (Info Management), and establish a weekly meeting with the HR Director to approve user stories (Governance).</p>
+                        </div>
+                    </div>
+
+                    <!-- KA 2 -->
+                    <div id="ka2" class="ka-content hidden fade-in">
+                        <div class="flex items-center mb-4">
+                            <span class="bg-iiba-blue text-white px-3 py-1 rounded-full text-sm font-bold mr-3">KA 2</span>
+                            <h4 class="text-2xl font-bold">Elicitation & Collaboration</h4>
+                        </div>
+                        <p class="text-slate-700 mb-6">Describes the tasks that BAs perform to obtain information from stakeholders and confirm the results. It's about drawing out info, not just "gathering" it.</p>
+                        
+                        <h5 class="font-bold text-slate-800 mb-2 border-b pb-1">Core Tasks</h5>
+                        <ul class="list-disc pl-5 mb-6 text-slate-600 space-y-1">
+                            <li>Prepare for Elicitation</li>
+                            <li>Conduct Elicitation (Interviews, Workshops, Observation)</li>
+                            <li>Confirm Elicitation Results</li>
+                            <li>Communicate Business Analysis Information</li>
+                            <li>Manage Stakeholder Collaboration</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                            <h5 class="font-bold text-blue-800 mb-1"><i class="fas fa-briefcase mr-2"></i>Real-World Application</h5>
+                            <p class="text-sm text-blue-900">You prepare a questionnaire, host a focus group with end-users to understand their pain points with the current software, and afterward, send out meeting minutes to ensure you captured their needs correctly (Confirmation).</p>
+                        </div>
+                    </div>
+
+                    <!-- KA 3 -->
+                    <div id="ka3" class="ka-content hidden fade-in">
+                        <div class="flex items-center mb-4">
+                            <span class="bg-iiba-blue text-white px-3 py-1 rounded-full text-sm font-bold mr-3">KA 3</span>
+                            <h4 class="text-2xl font-bold">Requirements Life Cycle Management</h4>
+                        </div>
+                        <p class="text-slate-700 mb-6">Ensures that business, stakeholder, and solution requirements and designs are aligned to one another and that the solution implements them. It manages requirements from inception to retirement.</p>
+                        
+                        <h5 class="font-bold text-slate-800 mb-2 border-b pb-1">Core Tasks</h5>
+                        <ul class="list-disc pl-5 mb-6 text-slate-600 space-y-1">
+                            <li>Trace Requirements (Forward and Backward)</li>
+                            <li>Maintain Requirements (Keep them reusable)</li>
+                            <li>Prioritize Requirements (MoSCoW, Timeboxing)</li>
+                            <li>Assess Requirements Changes</li>
+                            <li>Approve Requirements</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                            <h5 class="font-bold text-blue-800 mb-1"><i class="fas fa-briefcase mr-2"></i>Real-World Application</h5>
+                            <p class="text-sm text-blue-900">A stakeholder requests a new "chatbot" feature halfway through development. You trace this back to the business need, assess the impact on the budget and timeline, and present it to the sponsor for approval or rejection.</p>
+                        </div>
+                    </div>
+
+                    <!-- KA 4 -->
+                    <div id="ka4" class="ka-content hidden fade-in">
+                        <div class="flex items-center mb-4">
+                            <span class="bg-iiba-blue text-white px-3 py-1 rounded-full text-sm font-bold mr-3">KA 4</span>
+                            <h4 class="text-2xl font-bold">Strategy Analysis</h4>
+                        </div>
+                        <p class="text-slate-700 mb-6">Focuses on how to identify the business need, address that need, and align the resulting strategy for the change with higher- and lower-level strategies.</p>
+                        
+                        <h5 class="font-bold text-slate-800 mb-2 border-b pb-1">Core Tasks</h5>
+                        <ul class="list-disc pl-5 mb-6 text-slate-600 space-y-1">
+                            <li>Analyze Current State ("As-Is")</li>
+                            <li>Define Future State ("To-Be")</li>
+                            <li>Assess Risks</li>
+                            <li>Define Change Strategy (How to get from As-Is to To-Be)</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                            <h5 class="font-bold text-blue-800 mb-1"><i class="fas fa-briefcase mr-2"></i>Real-World Application</h5>
+                            <p class="text-sm text-blue-900">Mapping out a company's current manual supply chain process, envisioning an automated future state, identifying the risk of staff resistance, and proposing a phased software rollout.</p>
+                        </div>
+                    </div>
+
+                    <!-- KA 5 -->
+                    <div id="ka5" class="ka-content hidden fade-in">
+                        <div class="flex items-center mb-4">
+                            <span class="bg-iiba-blue text-white px-3 py-1 rounded-full text-sm font-bold mr-3">KA 5</span>
+                            <h4 class="text-2xl font-bold">Requirements Analysis & Design Definition</h4>
+                        </div>
+                        <p class="text-slate-700 mb-6">Structures and organizes requirements discovered during elicitation activities, specifies and models requirements and designs, and validates and verifies information.</p>
+                        
+                        <h5 class="font-bold text-slate-800 mb-2 border-b pb-1">Core Tasks</h5>
+                        <ul class="list-disc pl-5 mb-6 text-slate-600 space-y-1">
+                            <li>Specify and Model Requirements (UML, Use Cases)</li>
+                            <li>Verify Requirements (Check for quality/correctness)</li>
+                            <li>Validate Requirements (Check for value/business alignment)</li>
+                            <li>Define Requirements Architecture</li>
+                            <li>Define Design Options</li>
+                            <li>Analyze Potential Value and Recommend Solution</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                            <h5 class="font-bold text-blue-800 mb-1"><i class="fas fa-briefcase mr-2"></i>Real-World Application</h5>
+                            <p class="text-sm text-blue-900">Taking raw interview notes and creating structured Process Flow Diagrams, writing clear User Stories, verifying they meet quality standards (e.g., INVEST criteria), and proposing three different vendor software packages as design options.</p>
+                        </div>
+                    </div>
+
+                    <!-- KA 6 -->
+                    <div id="ka6" class="ka-content hidden fade-in">
+                        <div class="flex items-center mb-4">
+                            <span class="bg-iiba-blue text-white px-3 py-1 rounded-full text-sm font-bold mr-3">KA 6</span>
+                            <h4 class="text-2xl font-bold">Solution Evaluation</h4>
+                        </div>
+                        <p class="text-slate-700 mb-6">Assesses the performance of and value delivered by a solution in use by the enterprise, and recommends removal of barriers or constraints that prevent full value realization.</p>
+                        
+                        <h5 class="font-bold text-slate-800 mb-2 border-b pb-1">Core Tasks</h5>
+                        <ul class="list-disc pl-5 mb-6 text-slate-600 space-y-1">
+                            <li>Measure Solution Performance</li>
+                            <li>Analyze Performance Measures</li>
+                            <li>Assess Solution Limitations</li>
+                            <li>Assess Enterprise Limitations</li>
+                            <li>Recommend Actions to Increase Solution Value</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                            <h5 class="font-bold text-blue-800 mb-1"><i class="fas fa-briefcase mr-2"></i>Real-World Application</h5>
+                            <p class="text-sm text-blue-900">Three months after launching a new E-commerce site, you measure the cart abandonment rate. You realize the solution works fine, but users are dropping off due to high shipping costs (an enterprise limitation), and recommend a free shipping promotion.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Exam Prep / Active Recall Simulator -->
+        <section id="exam-prep" class="scroll-mt-24">
+            <div class="bg-iiba-blue text-white p-8 rounded-2xl shadow-xl">
+                <div class="text-center mb-8">
+                    <h3 class="text-3xl font-bold mb-2">IIBA® Exam Simulator</h3>
+                    <p class="text-blue-200">Test your knowledge with these past-exam style questions covering concepts from BABOK v3. Click the options to verify your answer.</p>
+                </div>
+
+                <div class="space-y-6 max-w-4xl mx-auto">
+                    
+                    <!-- Question 1 -->
+                    <div class="bg-white text-slate-800 rounded-xl p-6 shadow-md border-l-8 border-iiba-accent">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="font-bold text-lg w-5/6">1. According to the BACCM™, which concept represents the circumstances that influence, are influenced by, and provide understanding of the change?</h4>
+                            <span class="bg-slate-100 text-slate-500 text-xs px-2 py-1 rounded font-bold uppercase">Core Concepts</span>
+                        </div>
+                        <div class="space-y-2" id="q1-options">
+                            <button onclick="checkAnswer(1, 'A', false)" class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">A. Value</button>
+                            <button onclick="checkAnswer(1, 'B', true)"  class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">B. Context</button>
+                            <button onclick="checkAnswer(1, 'C', false)" class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">C. Need</button>
+                            <button onclick="checkAnswer(1, 'D', false)" class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">D. Strategy</button>
+                        </div>
+                        <div id="q1-feedback" class="hidden mt-4 p-4 rounded bg-slate-100 text-sm">
+                            <strong>Rationale:</strong> In the Business Analysis Core Concept Model (BACCM), <em>Context</em> is explicitly defined as the circumstances that influence, are influenced by, and provide understanding of the change.
+                        </div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="bg-white text-slate-800 rounded-xl p-6 shadow-md border-l-8 border-iiba-accent">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="font-bold text-lg w-5/6">2. Which knowledge area contains the task "Prioritize Requirements"?</h4>
+                            <span class="bg-slate-100 text-slate-500 text-xs px-2 py-1 rounded font-bold uppercase">Knowledge Areas</span>
+                        </div>
+                        <div class="space-y-2" id="q2-options">
+                            <button onclick="checkAnswer(2, 'A', false)" class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">A. Elicitation and Collaboration</button>
+                            <button onclick="checkAnswer(2, 'B', false)" class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">B. Strategy Analysis</button>
+                            <button onclick="checkAnswer(2, 'C', true)"  class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">C. Requirements Life Cycle Management</button>
+                            <button onclick="checkAnswer(2, 'D', false)" class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">D. Requirements Analysis and Design Definition</button>
+                        </div>
+                        <div id="q2-feedback" class="hidden mt-4 p-4 rounded bg-slate-100 text-sm">
+                            <strong>Rationale:</strong> Prioritize Requirements is a task within the Requirements Life Cycle Management knowledge area, dealing with the ongoing administration of requirements to ensure the most important ones are addressed first.
+                        </div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="bg-white text-slate-800 rounded-xl p-6 shadow-md border-l-8 border-iiba-accent">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="font-bold text-lg w-5/6">3. You are a BA evaluating a newly implemented CRM system. You discover that while the system works perfectly, sales reps are not using it because they don't understand the interface. What have you identified?</h4>
+                            <span class="bg-slate-100 text-slate-500 text-xs px-2 py-1 rounded font-bold uppercase">Application</span>
+                        </div>
+                        <div class="space-y-2" id="q3-options">
+                            <button onclick="checkAnswer(3, 'A', false)" class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">A. A Solution Limitation</button>
+                            <button onclick="checkAnswer(3, 'B', true)"  class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">B. An Enterprise Limitation</button>
+                            <button onclick="checkAnswer(3, 'C', false)" class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">C. A Failed Elicitation</button>
+                            <button onclick="checkAnswer(3, 'D', false)" class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">D. A Strategy Risk</button>
+                        </div>
+                        <div id="q3-feedback" class="hidden mt-4 p-4 rounded bg-slate-100 text-sm">
+                            <strong>Rationale:</strong> This falls under "Assess Enterprise Limitations" (Solution Evaluation KA). The solution itself operates as designed (no solution limitation), but factors outside the system (lack of training/culture of the enterprise) are preventing value realization.
+                        </div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="bg-white text-slate-800 rounded-xl p-6 shadow-md border-l-8 border-iiba-accent">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="font-bold text-lg w-5/6">4. The difference between verifying a requirement and validating a requirement is that:</h4>
+                            <span class="bg-slate-100 text-slate-500 text-xs px-2 py-1 rounded font-bold uppercase">Definitions</span>
+                        </div>
+                        <div class="space-y-2" id="q4-options">
+                            <button onclick="checkAnswer(4, 'A', true)"  class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">A. Verifying ensures it is formatted correctly and meets quality standards; validating ensures it delivers business value.</button>
+                            <button onclick="checkAnswer(4, 'B', false)" class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">B. Verifying requires sponsor approval; validating requires IT approval.</button>
+                            <button onclick="checkAnswer(4, 'C', false)" class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">C. Verifying is done during elicitation; validating is done during solution evaluation.</button>
+                            <button onclick="checkAnswer(4, 'D', false)" class="w-full text-left p-3 border rounded hover:bg-slate-50 transition q-btn">D. Verifying ensures business value; validating ensures spelling and grammar are correct.</button>
+                        </div>
+                        <div id="q4-feedback" class="hidden mt-4 p-4 rounded bg-slate-100 text-sm">
+                            <strong>Rationale:</strong> Verification (Quality check - "Did we build the requirements right?") vs. Validation (Value check - "Did we build the right requirements?"). Both are tasks in the Requirements Analysis and Design Definition KA.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center mt-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="mb-2">This is an educational summary and study guide.</p>
+            <p class="text-sm">BABOK®, IIBA®, CCBA®, and CBAP® are registered trademarks of the International Institute of Business Analysis.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        // Tab functionality for Knowledge Areas
+        function openTab(tabId) {
+            // Hide all content
+            const contents = document.querySelectorAll('.ka-content');
+            contents.forEach(content => content.classList.add('hidden'));
+
+            // Reset all tabs
+            const tabs = document.querySelectorAll('.ka-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('border-iiba-blue', 'bg-iiba-light', 'text-iiba-blue', 'font-semibold');
+                tab.classList.add('border-transparent', 'text-slate-600');
+            });
+
+            // Show selected content
+            document.getElementById(tabId).classList.remove('hidden');
+
+            // Highlight selected tab
+            const activeTab = document.getElementById('tab-' + tabId);
+            activeTab.classList.remove('border-transparent', 'text-slate-600');
+            activeTab.classList.add('border-iiba-blue', 'bg-iiba-light', 'text-iiba-blue', 'font-semibold');
+        }
+
+        // Exam Simulator Functionality
+        function checkAnswer(questionNum, selectedOption, isCorrect) {
+            const container = document.getElementById(`q${questionNum}-options`);
+            const buttons = container.querySelectorAll('button');
+            const feedback = document.getElementById(`q${questionNum}-feedback`);
+
+            // Disable all buttons in this question
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-slate-50', 'cursor-pointer');
+                btn.classList.add('cursor-not-allowed', 'opacity-60');
+                
+                // Highlight the correct answer regardless of choice
+                if(btn.innerText.startsWith(getCorrectLetter(questionNum))) {
+                    btn.classList.remove('border');
+                    btn.classList.add('bg-green-100', 'border-green-500', 'text-green-800', 'border-2', 'opacity-100', 'font-bold');
+                }
+            });
+
+            // Highlight incorrect choice if applicable
+            if (!isCorrect) {
+                const selectedBtn = Array.from(buttons).find(btn => btn.innerText.startsWith(selectedOption));
+                selectedBtn.classList.remove('border', 'opacity-60');
+                selectedBtn.classList.add('bg-red-100', 'border-red-500', 'text-red-800', 'border-2', 'opacity-100');
+            }
+
+            // Show feedback rationale with slide down effect
+            feedback.classList.remove('hidden');
+            feedback.classList.add('fade-in');
+            
+            if(isCorrect) {
+                feedback.classList.add('bg-green-50', 'border', 'border-green-200');
+                feedback.innerHTML = `<div class="text-green-600 font-bold mb-1"><i class="fas fa-check-circle mr-1"></i> Correct!</div>` + feedback.innerHTML;
+            } else {
+                feedback.classList.add('bg-red-50', 'border', 'border-red-200');
+                feedback.innerHTML = `<div class="text-red-600 font-bold mb-1"><i class="fas fa-times-circle mr-1"></i> Incorrect.</div>` + feedback.innerHTML;
+            }
+        }
+
+        // Helper map for correct answers to highlight
+        function getCorrectLetter(qNum) {
+            const answers = { 1: 'B', 2: 'C', 3: 'B', 4: 'A' };
+            return answers[qNum];
+        }
+    </script>
+</body>
+</html>
