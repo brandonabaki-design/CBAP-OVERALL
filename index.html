@@ -821,11 +821,13 @@ function buildPrompt(){
     p+="\n";
   }
   p+="WHAT I'D LIKE YOU TO DO:\n";
-  p+="1. Suggest 3–5 specific, focused EE research questions, each clearly tied to ONE of the "+
-     "subjects I can choose (or a valid two-subject World Studies combination).\n";
-  p+="2. For each, explain in a sentence why it fits my interests, strengths and what I said in my own words.\n";
-  p+="3. Flag any feasibility issues for a ~4,000-word high-school EE (data access, scope, resources).\n";
-  p+="4. Then ask me 2–3 follow-up questions to help narrow down to a final topic.\n";
+  p+="1. First, ask me a few follow-up questions to dig deeper into my interests and hobbies "+
+     "(especially my answers in my own words above).\n";
+  p+="2. Then suggest 3–5 specific EE TOPIC IDEAS, each clearly tied to ONE of the subjects I can "+
+     "choose (or a valid two-subject World Studies combination). Please suggest topics only — do "+
+     "NOT write research questions for me; I'll shape the research question later with my supervisor.\n";
+  p+="3. For each idea, explain in a sentence why it fits my interests, strengths and what I said in my own words.\n";
+  p+="4. Flag any feasibility issues for a ~4,000-word high-school EE (data access, scope, resources).\n";
   p+="Keep your suggestions realistic and beginner-friendly, and remember I still need to agree "+
      "my final topic with my school supervisor.";
   return p;
