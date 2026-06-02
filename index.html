@@ -75,6 +75,18 @@
   .speaker{font-weight:bold;color:var(--gold-d);font-size:14px;letter-spacing:.5px;text-transform:uppercase;}
   .npc-emoji{font-size:42px;line-height:1;}
   .hidden{display:none!important;}
+  .answerbox{
+    width:100%;font-family:inherit;font-size:15px;line-height:1.4;color:var(--ink);
+    background:#fff8e8;border:2px solid var(--gold-d);border-radius:10px;
+    padding:11px 13px;resize:vertical;min-height:84px;margin-top:6px;
+  }
+  .answerbox:focus{outline:none;border-color:var(--green);}
+  .charhint{font-size:11px;color:#7a6a4d;text-align:right;margin:2px 2px 0;}
+  .promptbox{
+    width:100%;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;
+    line-height:1.45;color:var(--ink);background:#fff8e8;border:2px solid var(--gold-d);
+    border-radius:10px;padding:11px 13px;resize:vertical;height:150px;margin-top:6px;text-align:left;
+  }
 
   /* ---------- HUD ---------- */
   #hud{
@@ -151,12 +163,12 @@
       <h1>Topic Quest</h1>
       <h2>The Extended Essay Explorer</h2>
       <p>You're a curious student wandering the Great Library, hunting for the perfect
-      <b>IB Extended Essay</b> topic. Eight mentors are scattered about — talk to each one
-      and answer honestly. Your choices reveal where your curiosity truly lives.</p>
-      <p>When you've gathered all the clues, the <b>Topic Oracle</b> 🔮 will awaken and
-      point you toward a subject area — with real example research questions from the
-      <b>IB Extended Essay Guide</b>, limited to the subjects offered at our school — that
-      you can take to your AI Topic Coach.</p>
+      <b>IB Extended Essay</b> topic. Twelve mentors are scattered about — talk to each one.
+      Some offer a choice of answers; others invite you to reply <b>in your own words</b>.
+      Answer honestly: it all builds a picture of where your curiosity lives.</p>
+      <p>When you've gathered every clue, the <b>Topic Oracle</b> 🔮 awakens, points you toward
+      a subject area (only ones our school offers), and writes a <b>personalized prompt</b> you
+      can copy straight into your AI Topic Coach to start finding a topic.</p>
       <p style="font-size:13px;color:#7a6a4d;">
         Move with <b>WASD / arrow keys</b> (or the on-screen pad). Walk up to a glowing
         mentor and press <b>E</b> / <b>TALK</b> to speak.</p>
@@ -377,6 +389,18 @@ const QUESTIONS = [
       ["Creativity and originality", {arts:2}],
       ["Seeing the big global picture", {world:2}],
     ]},
+  { name:"The Dreamer", emoji:"💭", open:true,
+    q:"In a sentence or two, what's a subject, idea, or question you find genuinely fascinating — something you could happily read about for hours?",
+    placeholder:"e.g. why some languages have no word for a colour, how black holes bend time, the psychology of why we follow trends…" },
+  { name:"The Tinkerer", emoji:"🛠️", open:true,
+    q:"Describe a real-world problem, hobby, experience, or place that matters to you and that you'd love to explore more deeply.",
+    placeholder:"e.g. plastic waste in my city, my football team's stats, traditional Arabic calligraphy, my part-time job…" },
+  { name:"The Counsellor", emoji:"🧑‍🏫", open:true,
+    q:"Which of your current IB subjects do you enjoy most, and is there one you're already leaning toward for your EE?",
+    placeholder:"e.g. I love Chemistry HL and Economics; maybe an Economics EE, but I'm not sure…" },
+  { name:"The Realist", emoji:"⚖️", open:true,
+    q:"What kind of EE work would feel like a chore for you, or anything you'd rather avoid?",
+    placeholder:"e.g. long lab experiments, heavy maths, reading huge novels, surveys of lots of people…" },
 ];
 
 /* ============================================================
@@ -388,10 +412,10 @@ const ctx = cv.getContext('2d');
 
 const NPCS = QUESTIONS.map((qq,i)=>({...qq, qIndex:i, done:false}));
 const layout = [
-  [165,150],[480,120],[795,150],
-  [150,440],[795,440],
-  [330,300],[630,300],
-  [480,470],
+  [200,140],[360,140],[600,140],[760,140],
+  [150,240],[810,240],
+  [150,360],[810,360],
+  [200,455],[360,455],[600,455],[760,455],
 ];
 NPCS.forEach((n,i)=>{ n.x=layout[i][0]; n.y=layout[i][1]; });
 
@@ -408,7 +432,13 @@ const setKey=(dir,on)=>{
   if(dir==='up') keys.up=on; if(dir==='down') keys.down=on;
   if(dir==='left') keys.left=on; if(dir==='right') keys.right=on;
 };
+const typingInField=e=>{
+  const t=e.target;
+  return t && (t.tagName==='TEXTAREA' || t.tagName==='INPUT');
+};
 window.addEventListener('keydown',e=>{
+  if(typingInField(e)) return;            // let students type freely
+  if(state.scene!=='play') return;        // ignore movement outside the world
   const k=e.key.toLowerCase();
   if(['arrowup','w'].includes(k)) keys.up=true;
   if(['arrowdown','s'].includes(k)) keys.down=true;
@@ -476,17 +506,39 @@ function openDialogue(npc){
   document.getElementById('dlgName').textContent=npc.name;
   document.getElementById('dlgQuestion').textContent=npc.q;
   const box=document.getElementById('dlgOpts'); box.innerHTML="";
-  npc.opts.forEach(([label,weights])=>{
-    const b=document.createElement('button');
-    b.className="opt"; b.textContent=label;
-    b.onclick=()=>chooseAnswer(npc,label,weights);
-    box.appendChild(b);
-  });
+
+  if(npc.open){
+    // open-ended: free-text answer in the student's own words
+    const ta=document.createElement('textarea');
+    ta.className="answerbox"; ta.placeholder=npc.placeholder||"Type your answer here…";
+    ta.maxLength=600;
+    ta.value=npc.answer||"";
+    box.appendChild(ta);
+    const hint=document.createElement('div');
+    hint.className="charhint"; hint.textContent="0 / 600";
+    box.appendChild(hint);
+    ta.addEventListener('input',()=>{ hint.textContent=`${ta.value.length} / 600`; });
+    const submit=document.createElement('button');
+    submit.className="btn green"; submit.style.marginTop="8px";
+    submit.textContent="Share my answer ✓";
+    submit.onclick=()=>chooseOpen(npc, ta.value);
+    box.appendChild(submit);
+    const skip=document.createElement('button');
+    skip.className="btn ghost"; skip.textContent="Skip this one";
+    skip.onclick=()=>chooseOpen(npc, "");
+    box.appendChild(skip);
+    setTimeout(()=>ta.focus(),50);
+  } else {
+    npc.opts.forEach(([label,weights])=>{
+      const b=document.createElement('button');
+      b.className="opt"; b.textContent=label;
+      b.onclick=()=>chooseAnswer(npc,label,weights);
+      box.appendChild(b);
+    });
+  }
   dlg.classList.remove('hidden');
 }
-function chooseAnswer(npc,label,weights){
-  for(const k in weights) state.score[k]+=weights[k];
-  state.transcript.push({mentor:npc.name, question:npc.q, answer:label});
+function finishTurn(npc){
   npc.done=true;
   dlg.classList.add('hidden');
   state.scene="play"; state.active=null;
@@ -496,6 +548,19 @@ function chooseAnswer(npc,label,weights){
     ORACLE.awake=true;
     document.getElementById('hintChip').textContent="The Oracle has awakened! 🔮";
   }
+}
+function chooseAnswer(npc,label,weights){
+  for(const k in weights) state.score[k]+=weights[k];
+  state.transcript.push({mentor:npc.name, question:npc.q, answer:label, open:false});
+  finishTurn(npc);
+}
+function chooseOpen(npc,text){
+  const val=(text||"").trim();
+  npc.answer=val;
+  // remove any previous answer for this mentor (in case of re-visit), then record
+  state.transcript=state.transcript.filter(t=>t.mentor!==npc.name);
+  state.transcript.push({mentor:npc.name, question:npc.q, answer:val||"(left blank)", open:true});
+  finishTurn(npc);
 }
 
 /* ============================================================
@@ -538,16 +603,17 @@ function showResult(){
     <div>${scoreHTML}</div>
 
     <hr style="border:none;border-top:1px dashed var(--gold-d);margin:18px 0">
-    <p><b>Take your results to your AI Topic Coach</b> to brainstorm a real research
-       question. Download your profile first, then open the coach and paste it in.</p>
-    <button class="btn ghost" id="dlMd">⬇ Download Markdown</button>
-    <button class="btn ghost" id="dlJson">⬇ Download JSON</button>
+    <p><b>Your personalized prompt is ready.</b> Copy it, open the EE Topic Coach, and paste
+       it in as your first message — it gives the coach everything it needs to help you.</p>
+    <p style="font-size:12px;color:#7a6a4d">Preview (you can edit before copying):</p>
+    <textarea class="promptbox" id="promptText" spellcheck="false"></textarea>
+    <button class="btn green" id="copyBtn">📋 Copy my prompt</button>
     <br>
     <a href="https://gemini.google.com/gem/1QuNMomwigyvt_GltuOpN29fR78Y59xIQ?usp=sharing"
        target="_blank" rel="noopener">
-       <button class="btn green">✨ Open the EE Topic Coach →</button></a>
+       <button class="btn">✨ Open the EE Topic Coach →</button></a>
     <br>
-    <button class="btn" id="replay">↺ Play Again</button>
+    <button class="btn ghost" id="replay">↺ Play Again</button>
 
     <details style="margin-top:14px;text-align:left">
       <summary style="cursor:pointer;font-weight:bold;color:var(--gold-d)">View my full answers</summary>
@@ -557,60 +623,73 @@ function showResult(){
        school; example topics and research questions are drawn from the IB Extended Essay Guide
        (first assessment 2027). Your final EE topic should be agreed with your supervisor.</p>
   `;
-  document.getElementById('dlMd').onclick=()=>download('md');
-  document.getElementById('dlJson').onclick=()=>download('json');
+  document.getElementById('promptText').value=buildPrompt();
+  document.getElementById('copyBtn').onclick=copyPrompt;
   document.getElementById('replay').onclick=()=>location.reload();
   document.getElementById('result').classList.remove('hidden');
 }
 
-/* ---------- downloads ---------- */
-function buildData(){
+/* ---------- personalized prompt for the Gemini EE Topic Coach ---------- */
+const OFFERED_SUBJECTS =
+  "Biology, Chemistry, Computer science, Physics, Mathematics, Business management, "+
+  "Digital society, Economics, Global politics, Psychology, Language A (English literature "+
+  "or language & literature), Language B Arabic, Visual arts, and the interdisciplinary "+
+  "\"World Studies\" pathway (combining any two of these subjects)";
+
+function buildPrompt(){
   const ranked=rankedCats();
-  const d=DETAILS[ranked[0]];
-  return {
-    title:"IB Extended Essay — Topic Quest Profile",
-    generated:new Date().toISOString(),
-    source:"Subjects and examples drawn from the IB Extended Essay Guide (first assessment 2027), limited to subjects offered at our school.",
-    recommendedArea:CATS[ranked[0]].title,
-    secondaryArea:CATS[ranked[1]].title,
-    pathwayDescription:d.desc,
-    subjectsOffered:d.subjects,
-    subjectNote:d.note||"",
-    exampleTopicsAndResearchQuestions:d.examples,
-    tip:d.tip,
-    curiosityScores:ranked.reduce((o,k)=>(o[CATS[k].title]=state.score[k],o),{}),
-    answers:state.transcript,
-  };
+  const top=CATS[ranked[0]].title, second=CATS[ranked[1]].title;
+  const scores=ranked.map(k=>`${CATS[k].title}: ${state.score[k]}`).join(", ");
+
+  const choiceQs=state.transcript.filter(t=>!t.open);
+  const openQs=state.transcript.filter(t=>t.open);
+
+  let p="";
+  p+="You are my IB Extended Essay (EE) Topic Coach. I'm an IB Diploma Programme student "+
+     "and I just completed a topic-finder activity called \"Topic Quest\". Below is my "+
+     "personalized context. Please use it to help me find a focused, feasible EE topic.\n\n";
+
+  p+="IMPORTANT CONSTRAINT — subjects I can actually choose:\n";
+  p+="My school only offers these EE subjects, so please ONLY suggest topics within them and "+
+     "do not propose any other subject:\n"+OFFERED_SUBJECTS+".\n\n";
+
+  p+="MY RESULTS FROM THE ACTIVITY:\n";
+  p+=`- Strongest subject area: ${top} (next strongest: ${second})\n`;
+  p+=`- Interest profile (higher number = stronger pull): ${scores}\n\n`;
+
+  if(choiceQs.length){
+    p+="HOW I ANSWERED THE MULTIPLE-CHOICE QUESTIONS (interests & working style):\n";
+    choiceQs.forEach((t,i)=>{ p+=`${i+1}. ${t.question}\n   My answer: ${t.answer}\n`; });
+    p+="\n";
+  }
+  if(openQs.length){
+    p+="IN MY OWN WORDS:\n";
+    openQs.forEach(t=>{ p+=`- ${t.question}\n  ${t.answer}\n`; });
+    p+="\n";
+  }
+
+  p+="WHAT I'D LIKE YOU TO DO:\n";
+  p+="1. Suggest 3–5 specific, focused EE research questions, each clearly tied to ONE of the "+
+     "subjects I can choose (or a valid two-subject World Studies combination).\n";
+  p+="2. For each, explain in a sentence why it fits my interests, strengths and what I said in my own words.\n";
+  p+="3. Flag any feasibility issues for a ~4,000-word high-school EE (data access, scope, resources).\n";
+  p+="4. Then ask me 2–3 follow-up questions to help narrow down to a final topic.\n";
+  p+="Keep your suggestions realistic and beginner-friendly, and remember I still need to agree "+
+     "my final topic with my school supervisor.";
+  return p;
 }
-function buildMarkdown(){
-  const data=buildData();
-  let m=`# ${data.title}\n\n*Generated: ${new Date().toLocaleString()}*\n\n`;
-  m+=`> ${data.source}\n\n`;
-  m+=`## 🎯 Recommended subject area: ${data.recommendedArea}\n\n`;
-  m+=`${data.pathwayDescription}\n\n`;
-  m+=`**Also worth exploring:** ${data.secondaryArea}\n\n`;
-  m+=`**Subjects you could choose (offered at our school):** ${data.subjectsOffered.join(", ")}\n\n`;
-  if(data.subjectNote) m+=`*Note: ${data.subjectNote}*\n\n`;
-  m+=`### Example topics & research questions (from the IB EE Guide, first assessment 2027)\n`;
-  m+=data.exampleTopicsAndResearchQuestions.map(e=>
-       `- **${e.subject}** — ${e.topic}${e.rq?`\n  - *Research question:* ${e.rq}`:''}`).join("\n")+"\n\n";
-  m+=`### 💡 Tip\n${data.tip}\n\n`;
-  m+=`## My curiosity profile\n`;
-  m+=Object.entries(data.curiosityScores).map(([k,v])=>`- **${k}:** ${v}`).join("\n")+"\n\n";
-  m+=`## My answers\n`;
-  m+=data.answers.map((a,i)=>`${i+1}. **${a.question}**\n   - ${a.answer}`).join("\n")+"\n\n";
-  m+=`---\n*Next step: open the EE Topic Coach and paste this profile in to brainstorm a real research question. Your final topic must be agreed with your supervisor.*\n`;
-  return m;
-}
-function download(kind){
-  let content,mime,name;
-  if(kind==='json'){content=JSON.stringify(buildData(),null,2);mime="application/json";name="ee-topic-profile.json";}
-  else{content=buildMarkdown();mime="text/markdown";name="ee-topic-profile.md";}
-  const blob=new Blob([content],{type:mime});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);a.download=name;
-  document.body.appendChild(a);a.click();a.remove();
-  setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+
+function copyPrompt(){
+  const ta=document.getElementById('promptText');
+  const btn=document.getElementById('copyBtn');
+  const text=ta.value;
+  const done=()=>{ btn.textContent="✓ Copied!"; setTimeout(()=>btn.textContent="📋 Copy my prompt",1800); };
+  const fallback=()=>{ ta.focus(); ta.select();
+    try{ document.execCommand('copy'); done(); }
+    catch(e){ btn.textContent="Press Ctrl/Cmd+C"; } };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done).catch(fallback);
+  } else { fallback(); }
 }
 
 /* ============================================================
